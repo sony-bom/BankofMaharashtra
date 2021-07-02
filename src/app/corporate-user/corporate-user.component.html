@@ -1,0 +1,388 @@
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  crossorigin="anonymous"
+/>
+<!------ Include the above in your HEAD tag ---------->
+
+<body>
+  <!-- Navigation -->
+  <div class="row">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="col-sm-2" style="text-align: center">
+        <img class="img" src="./assets/user.png" /><br />
+        <span class="text">{{ userName }}</span>
+      </div>
+      <div class="col-sm-8">
+        <h1>Welcome To Bank Of Maharashtra</h1>
+      </div>
+      <div class="col-sm-1">
+        <div class="items">
+          <img
+            src="./assets/bank.png"
+            style="height: 70px; width: 100px; float: left"
+           
+          />
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <a (click)="logout()">
+          <img
+            src="./assets/logout1.png"
+            style="
+            
+              height: 39px;
+            width: 33px;
+              margin-left: 16px;
+              cursor: pointer;
+            "
+        /></a>
+         <!-- height: 47px;
+        width: 58px;  -->
+      </div>
+    </nav>
+  </div>
+
+  <!----Navbar ends here-->
+
+  <div class="row">
+    <div
+      [ngClass]="{
+        boxMinHeight: boxenable != false,
+        boxMaxHeight: boxenable === false
+      }"
+    >
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-11">
+          <form #reportForm="ngForm">
+            <div class="row">
+              <div class="form-group col-sm-3">
+                <label class="form-label"
+                  >Report Name
+                  <span class="requiredfield">*</span>
+                </label>
+
+                <select class="form-control"  name="reportname" #reportname="ngModel"
+                [(ngModel)]="reportName" required>
+                     
+                  <option value="">Select</option>
+                  <option value="RBI">RBI207_Special Fortnightly Return</option>
+                </select>
+                <div class="drop-cap-icon">
+                  <img src="assets/svgs/dropdown.svg" alt="drop-cap" />
+                </div>
+                <div *ngIf="reportname.invalid && (reportname.dirty || reportname.touched)" class="error-block">
+                  <div style="color:red" *ngIf="reportname.errors.required">
+                    Report Name is required
+                  </div>
+              
+                </div>
+              </div>
+              <div class="form-group col-sm-2">
+                <label class="form-label"
+                  >From Date
+                  <span class="requiredfield">*</span>
+                </label>
+                <input
+                  type="date"
+                  id="fromdate"
+                  name="fromdate"
+                  class="form-control"
+                  #fromdate="ngModel"
+                  [(ngModel)]="fromDate" required
+                />
+                <div *ngIf="fromdate.invalid && (fromdate.dirty || fromdate.touched)" class="error-block">
+                  <div style="color:red" *ngIf="fromdate.errors.required">
+                    From Date is required
+                  </div>
+              
+                </div>
+              </div>
+              <div class="form-group col-sm-2">
+                <label class="form-label"
+                  >To Date
+                  <span class="requiredfield">*</span>
+                </label>
+                <input
+                  type="date"
+                  id="todate"
+                  name="todate"
+                  class="form-control"
+                  #todate="ngModel"
+                  [(ngModel)]="toDate" required
+                />
+                <div *ngIf="todate.invalid && (todate.dirty || todate.touched)" class="error-block">
+                  <div style="color:red" *ngIf="todate.errors.required">
+                    To Date is required
+                  </div>
+              
+                </div>
+              </div>
+
+              <div class="form-group col-sm-2">
+                <label class="form-label"
+                  >Hierarchy
+                  <span class="requiredfield">*</span>
+                </label>
+                <br />
+
+                <select
+                  class="form-control"
+                  style="width: 100%"
+                  name="Srch"
+                  #Srch="ngModel"
+                  [(ngModel)]="searchBy" required
+                >
+                  <option value="">Select</option>
+                  <option value="corporate">Corporate</option>
+                  <option value="branch">Branch</option>
+                  <option value="allzones">All Zones</option>
+                </select>
+                <div class="drop-cap-icon">
+                  <img src="assets/svgs/dropdown.svg" alt="drop-cap" />
+                </div>
+                <div *ngIf="Srch.invalid && (Srch.dirty || Srch.touched)" class="error-block">
+                  <div style="color:red" *ngIf="Srch.errors.required">
+                    Hierarchy is required
+                  </div>
+              
+                </div>
+              </div>
+              <div class="form-group col-sm-1">
+                <label class="form-label"> </label><br />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="search(searchBy)"
+                  [disabled]="reportForm.invalid"
+                  value="Search"
+                />
+              </div>
+              <div class="form-group col-sm-1">
+                <label class="form-label"> </label><br />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="clear()"
+                
+                  value="Clear"
+                />
+              </div>
+            </div>
+          </form>
+          <!--corporate table-->
+
+          <div *ngIf="enableCorporateTable">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Amount Outstanding</th>
+                  <th colspan="2">Rate of intrest</th>
+                  <th colspan="2">
+                    Interest rate range in which 60 percent or more business is
+                    contracted
+                  </th>
+                </tr>
+                <tr>
+                  <th style="border-bottom-color: #fff"></th>
+                  <th style="border-bottom-color: #fff"></th>
+                  <th colspan="2">Range</th>
+                  <th colspan="2"></th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>min</th>
+                  <th>max</th>
+                  <th>min</th>
+                  <th>max</th>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let aData of finalObj.Sheet1 | paginate: { itemsPerPage: 5,currentPage: q }">
+                  <td>{{ aData.item }}</td>
+                  <td>{{ aData.AmountOutstanding }}</td>
+                  <td colspan="1">{{ aData.roimin }}</td>
+                  <td>{{ aData.roimax }}</td>
+                  <td>{{ aData.irrmin }}</td>
+                  <td>{{ aData.irrmax }}</td>
+                </tr>
+             
+              </tbody>
+            
+            </table>
+            <div class="clearfix">
+            <pagination-controls (pageChange)="q = $event"></pagination-controls>
+          </div>
+          </div>
+
+          <!--All zones table-->
+
+          <div *ngIf="enableBranchTable">
+            <table
+              class="table table-striped"
+              *ngIf="enableTable1 && !enableTable2"
+            >
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Amount Outstanding</th>
+                  <th colspan="2">Rate of intrest</th>
+                  <th colspan="2">
+                    Interest rate range in which 60 percent or more business is
+                    contracted
+                  </th>
+                </tr>
+                <tr>
+                  <th style="border-bottom-color: #fff"></th>
+                  <th style="border-bottom-color: #fff"></th>
+                  <th colspan="2">Range</th>
+                  <th colspan="2"></th>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>min</th>
+                  <th>max</th>
+                  <th>min</th>
+                  <th>max</th>
+                </tr>
+                <tr>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let aData of finalObj.Sheet1 | paginate: { itemsPerPage: 5,currentPage: q }">
+                  <td
+                    class="link"
+                    [ngClass]="{
+                      colorGreen: aData.item === 'I. Type of Credit(1+2+3+4+5)',
+                      colorRed: aData.item != 'I. Type of Credit(1+2+3+4+5)'
+                    }"
+                  >
+                    <a (click)="getItems(aData)" (click)="popup = true"
+                      >{{ aData.item }}
+                    </a>
+                  </td>
+                  <!-- <a (click)='getItems(aData.Item)'>  <td  class="link" style="text-decoration: underline"
+{{aData.Item}} ></td> </a> -->
+                  <td>{{ aData.AmountOutstanding }}</td>
+                  <td colspan="1">{{ aData.roimin }}</td>
+                  <td>{{ aData.roimax }}</td>
+                  <td>{{ aData.irrmin }}</td>
+                  <td>{{ aData.irrmax }}</td>
+                </tr>
+              </tbody>
+            </table>
+        
+            <div class="content">
+              <table
+                class="table table-striped"
+                *ngIf="enableTable2 && !enableTable1 && !enableTable9"
+              >
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Amount Outstanding</th>
+                    <th colspan="2">Rate of intrest</th>
+                    <th colspan="2">
+                      Interest rate range in which 60 percent or more business
+                      is contracted
+                    </th>
+                  </tr>
+                  <tr>
+                    <th style="border-bottom-color: #fff"></th>
+                    <th style="border-bottom-color: #fff"></th>
+                    <th colspan="2">Range</th>
+                    <th colspan="2"></th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>min</th>
+                    <th>max</th>
+                    <th>min</th>
+                    <th>max</th>
+                  </tr>
+                  <tr>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cData of childData | paginate: { itemsPerPage: 5,currentPage: q }">
+                    <td
+                      class="link"
+                      style="text-decoration: underline; cursor: pointer"
+                    >
+                      <a
+                        (click)="getItemsForDetails(cData)"
+                        (click)="popup = true"
+                        >{{ cData.item }}
+                      </a>
+                    </td>
+
+                    <td>{{ cData.AmountOutstanding }}</td>
+                    <td colspan="1">{{ cData.roimin }}</td>
+                    <td>{{ cData.roimax }}</td>
+                    <td>{{ cData.irrmin }}</td>
+                    <td>{{ cData.irrmax }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            </div>
+
+            <div class="content">
+              <table class="table table-striped" *ngIf="enableTable9">
+                <thead>
+                  <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Key1</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cData of cDetails | paginate: { itemsPerPage: 5,currentPage: q }">
+                    <td>{{ cData.cust_id }}</td>
+                    <td>{{ cData.item }}</td>
+                    <!-- <a (click)='getItems(aData.Item)'>  <td  class="link" style="text-decoration: underline"
+{{aData.Item}} ></td> </a> -->
+                    <td>{{ cData.amount }}</td>
+                    <td>{{ cData.Key1 }}</td>
+                  </tr>
+                </tbody>
+              </table>
+           
+            </div>
+            <div class="clearfix">
+              <pagination-controls (pageChange)="q = $event"></pagination-controls>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

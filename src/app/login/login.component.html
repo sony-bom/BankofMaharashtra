@@ -1,0 +1,92 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="col-lg-2">
+  
+  </div>
+  <div class="col-lg-6">
+    <h1>
+      Welcome To Bank Of Maharashtra
+     </h1>
+  </div>
+  <div class="col-lg-1">
+    <div class="items">
+      <img src="./assets/bank.png" style="height: 70px;width: 100px;float: left;">
+    </div>
+  </div>
+  </nav>
+
+<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+  <div class="card card0 border-0">
+    <!-- <div class="row d-flex">
+      <div class="col-lg-6">
+        <img
+                    src="./assets/bank.png"
+                    style="height: 70px; width: 100px;"
+                  />
+      </div>
+    </div> -->
+      <div class="row d-flex">
+          <div class="col-lg-6">
+ 
+            <div class="card2 card border-0 px-4 py-5">
+              
+                  <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
+                    <img src="./assets/bankimg.png" class="image">
+                     <!-- <img src="./assets/bank-background.jpg" class="image"> -->
+                     <!-- <img src="https://i.imgur.com/uNGdWHi.png" class="image">-->
+                     </div> 
+
+
+                </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="card2 card border-0 px-4 py-5">
+                  <div class="row px-3 mb-4">
+                    <h2 class="active">Corporate User Log In </h2>           
+                  </div>
+                  <form class="registration-form" #loginForm="ngForm">
+                    <div class="row px-3">
+                    <div class="form-group col-sm-12">
+                      <label class="mb-1">
+                        <h6 class="mb-0 text-sm">User Name</h6>
+                    </label> 
+                      <input type="text" autocomplete="off" placeholder="username" class="mb-4"  name="userId" [(ngModel)]="user.userId" #userId="ngModel"
+                        required>
+                        <div *ngIf="userId.invalid && (userId.dirty || userId.touched)" class="error-block">
+                          <div style="color:red" *ngIf="userId.errors.required">
+                          User Name is required
+                          </div>
+                      
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                      <label class="mb-1">
+                        <h6 class="mb-0 text-sm">Password</h6>
+                    </label>
+                      <input type="password" autocomplete="new-password" placeholder="password" class="mb-4"  name="pswrd" [(ngModel)]="user.password" #pswrd="ngModel"
+                         required>
+                         <div *ngIf="pswrd.invalid && (pswrd.dirty || pswrd.touched)" class="error-block">
+                          <div style="color:red" *ngIf="pswrd.errors.required">
+                          Password is required
+                          </div>
+                      
+                        </div>
+                    </div>
+                  </div>
+                </form>
+                <div class="row px-3">
+        
+                  <div class="form-group col-sm-3">
+                    <input type="button" class="btn btn-primary" (click)="login()" [disabled]="loginForm.invalid" value="Log In">
+                          </div>
+                </div>
+                  <!-- <div class="row mb-4 px-3"> <small class="font-weight-bold">Don't have an account? <a class="text-danger ">Register</a></small> </div> -->
+              </div>
+          </div>
+      </div>
+      <div class="bg-blue py-4">
+          <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2">Copy Right Policy &copy; 2021. All rights reserved to Bank of Maharastra</small>
+              <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span class="fa fa-google-plus mr-4 text-sm"></span> <span class="fa fa-linkedin mr-4 text-sm"></span> <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
+          </div>
+      </div>
+  </div>
+</div>
